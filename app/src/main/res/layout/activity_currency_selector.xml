@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ارزهای مورد نظر را انتخاب کنید:"
+            android:textStyle="bold"
+            android:fontFamily="@font/vazir" />
+
+        <CheckBox android:id="@+id/chk_usd" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="USD" android:fontFamily="@font/vazir"/>
+        <CheckBox android:id="@+id/chk_eur" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="EUR" android:fontFamily="@font/vazir"/>
+        <CheckBox android:id="@+id/chk_aed" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="AED" android:fontFamily="@font/vazir"/>
+        <CheckBox android:id="@+id/chk_gbp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="GBP" android:fontFamily="@font/vazir"/>
+        <CheckBox android:id="@+id/chk_cad" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="CAD" android:fontFamily="@font/vazir"/>
+        <CheckBox android:id="@+id/chk_try" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="TRY" android:fontFamily="@font/vazir"/>
+        <CheckBox android:id="@+id/chk_cny" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="CNY" android:fontFamily="@font/vazir"/>
+        <CheckBox android:id="@+id/chk_jpy" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="JPY" android:fontFamily="@font/vazir"/>
+        <CheckBox android:id="@+id/chk_aud" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="AUD" android:fontFamily="@font/vazir"/>
+        <CheckBox android:id="@+id/chk_chf" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="CHF" android:fontFamily="@font/vazir"/>
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ذخیره"
+            android:fontFamily="@font/vazir"/>
+    </LinearLayout>
+</ScrollView>
