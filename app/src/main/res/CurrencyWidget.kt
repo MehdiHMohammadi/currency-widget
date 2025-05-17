@@ -1,4 +1,4 @@
-// فرض: استفاده از Retrofit برای فراخوانی API
+
 
 interface CurrencyApi {
     @GET("Market/Gold_Currency.php")
@@ -31,7 +31,5 @@ CoroutineScope(Dispatchers.IO).launch {
         val eurPrice = currencies.find { it.symbol == "EUR" }?.price ?: "N/A"
         val aedPrice = currencies.find { it.symbol == "AED" }?.price ?: "N/A"
         val tryPrice = currencies.find { it.symbol == "TRY" }?.price ?: "N/A"
-
-        // سپس با RemoteViews ویجت را آپدیت کنید
     }
 }
