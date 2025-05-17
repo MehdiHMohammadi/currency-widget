@@ -1,43 +1,37 @@
-class CurrencyWidget : AppWidgetProvider() {
+// فرض: استفاده از Retrofit برای فراخوانی API
 
-    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        for (appWidgetId in appWidgetIds) {
-            updateWidget(context, appWidgetManager, appWidgetId)
-        }
-    }
+interface CurrencyApi {
+    @GET("Market/Gold_Currency.php")
+    suspend fun getCurrencies(@Query("key") apiKey: String): Response<CurrencyResponse>
+}
 
-    private fun updateWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
-        val views = RemoteViews(context.packageName, R.layout.widget_layout)
-        views.setTextViewText(R.id.widget_content, "در حال دریافت داده...")
+data class CurrencyResponse(
+    val data: List<CurrencyItem>
+)
 
-        CoroutineScope(Dispatchers.IO).launch {
-            val result = fetchCurrencyData()
-            withContext(Dispatchers.Main) {
-                views.setTextViewText(R.id.widget_content, result)
-                appWidgetManager.updateAppWidget(appWidgetId, views)
-            }
-        }
-    }
+data class CurrencyItem(
+    val symbol: String,
+    val price: String,
+    val name: String
+)
 
-    private suspend fun fetchCurrencyData(): String {
-        return try {
-            val apiKey = "FreeOoaSw7qkzYc0WZiDmzIzFq9akFRZ"
-            val url = URL("https://brsapi.ir/Api/Market/Gold_Currency.php?key=$apiKey")
-            val connection = url.openConnection() as HttpURLConnection
-            connection.connect()
-            val response = connection.inputStream.bufferedReader().readText()
-            val json = JSONObject(response)
+// در ویجت یا در یک سرویس بروزرسانی ویجت
+val retrofit = Retrofit.Builder()
+    .baseUrl("https://brsapi.ir/Api/")
+    .addConverterFactory(GsonConverterFactory.create())
+    .build()
 
-            val selected = listOf("usd", "eur", "aed", "gbp", "cad", "try", "cny", "jpy", "aud", "chf")
-            val builder = StringBuilder()
-            for (code in selected) {
-                val item = json.getJSONObject(code)
-                val price = item.getString("price")
-                builder.append("$code: $price\n")
-            }
-            builder.toString()
-        } catch (e: Exception) {
-            "خطا در دریافت اطلاعات"
-        }
+val api = retrofit.create(CurrencyApi::class.java)
+
+CoroutineScope(Dispatchers.IO).launch {
+    val response = api.getCurrencies("FreeOoaSw7qkzYc0WZiDmzIzFq9akFRZ")
+    if (response.isSuccessful) {
+        val currencies = response.body()?.data ?: emptyList()
+        val usdPrice = currencies.find { it.symbol == "USD" }?.price ?: "N/A"
+        val eurPrice = currencies.find { it.symbol == "EUR" }?.price ?: "N/A"
+        val aedPrice = currencies.find { it.symbol == "AED" }?.price ?: "N/A"
+        val tryPrice = currencies.find { it.symbol == "TRY" }?.price ?: "N/A"
+
+        // سپس با RemoteViews ویجت را آپدیت کنید
     }
 }
