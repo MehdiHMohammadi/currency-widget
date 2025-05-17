@@ -15,7 +15,6 @@ data class CurrencyItem(
     val name: String
 )
 
-// در ویجت یا در یک سرویس بروزرسانی ویجت
 val retrofit = Retrofit.Builder()
     .baseUrl("https://brsapi.ir/Api/")
     .addConverterFactory(GsonConverterFactory.create())
